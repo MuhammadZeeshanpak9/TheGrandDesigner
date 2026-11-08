@@ -1,19 +1,21 @@
-import { TopUtilityBar } from "@/components/layout/TopUtilityBar";
-import { SecondaryTopBar } from "@/components/layout/SecondaryTopBar";
-import { MainHeader } from "@/components/layout/MainHeader";
-import { GuaranteeBar } from "@/components/layout/GuaranteeBar";
 import { Hero } from "@/components/sections/Hero";
-import { WellnessSection } from "@/components/sections/WellnessSection";
+import { IntroBlock } from "@/components/sections/IntroBlock";
+import { UnderstandingsGrid } from "@/components/sections/UnderstandingsGrid";
+import { WellnessShowcase } from "@/components/sections/WellnessShowcase";
+import { StoryBlock } from "@/components/sections/StoryBlock";
+import { Testimonials } from "@/components/sections/Testimonials";
+import { ConnectForm } from "@/components/sections/ConnectForm";
 
 export default function Home() {
   return (
-    <div className="flex flex-1 flex-col">
-      <TopUtilityBar />
-      <SecondaryTopBar />
-      <MainHeader />
-      <GuaranteeBar />
+    <main className="relative flex flex-col w-full">
       <Hero />
-      <WellnessSection />
-    </div>
+      <IntroBlock />
+      <UnderstandingsGrid />
+      <WellnessShowcase />
+      <StoryBlock />
+      <Testimonials />
+      <ConnectForm />
+    </main>
   );
 }
