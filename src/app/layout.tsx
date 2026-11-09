@@ -40,10 +40,10 @@ export default function RootLayout({
       className={`${cormorant.variable} ${inter.variable} text-ink h-full antialiased`}
     >
       <body className="min-h-full flex flex-col text-ink font-sans">
-        <div className="fixed inset-0 z-0">
+        <div className="fixed inset-0 z-0 h-[100dvh] w-screen">
           <HalftoneNebula
             preset="grandDesigner"
-            height="100vh"
+            height="100%"
             interactive
             maxDpr={1.5}
             voidClassName="bg-[var(--color-paper)]"
