@@ -34,6 +34,8 @@ export type FloatingDockItem = {
   ariaProps?: React.AriaAttributes;
   /** Captures the live DOM node of this item's anchor for external positioning (e.g. dropdown anchor). */
   onContainerRef?: (el: HTMLAnchorElement | null) => void;
+  /** Set false to keep the expanded mobile row open after tapping (e.g. a submenu trigger). Defaults to true. */
+  closeMobileOnTrigger?: boolean;
 };
 
 export const FloatingDock = ({
@@ -62,52 +64,59 @@ const FloatingDockMobile = ({
 }) => {
   const [open, setOpen] = useState(false);
   return (
-    <div className={cn("relative block md:hidden", className)}>
-      <AnimatePresence>
-        {open && (
+    <div className={cn("relative flex flex-col items-center md:hidden", className)}>
+      <AnimatePresence mode="wait" initial={false}>
+        {open ? (
           <motion.div
-            layoutId="nav"
-            className="absolute inset-x-0 bottom-full mb-2 flex flex-col gap-2"
+            key="row"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="flex items-center gap-3 rounded-full bg-ink/90 backdrop-blur-xl border border-gold/40 px-4 py-3 shadow-[0_8px_32px_rgba(184,145,47,0.2)]"
           >
-            {items.map((item, idx) => (
-              <motion.div
+            {items.map((item) => (
+              <a
+                href={item.href}
                 key={item.title}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{
-                  opacity: 0,
-                  y: 10,
-                  transition: { delay: idx * 0.05 },
+                ref={(el) => item.onContainerRef?.(el)}
+                aria-label={item.title}
+                onClick={(e) => {
+                  if (item.onTrigger) {
+                    e.preventDefault();
+                    item.onTrigger();
+                  }
+                  if (item.closeMobileOnTrigger !== false) setOpen(false);
                 }}
-                transition={{ delay: (items.length - 1 - idx) * 0.05 }}
+                {...item.ariaProps}
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold/10 border border-gold/30"
               >
-                <a
-                  href={item.href}
-                  key={item.title}
-                  aria-label={item.title}
-                  onClick={(e) => {
-                    if (item.onTrigger) {
-                      e.preventDefault();
-                      item.onTrigger();
-                    }
-                    setOpen(false);
-                  }}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-gold/10 backdrop-blur-md border border-gold/40"
-                >
-                  <div className="h-4 w-4 text-gold">{item.icon}</div>
-                </a>
-              </motion.div>
+                <div className="h-4 w-4 text-gold">{item.icon}</div>
+              </a>
             ))}
+            <button
+              onClick={() => setOpen(false)}
+              aria-label="Close menu"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold/10 border border-gold/30"
+            >
+              <Menu className="h-5 w-5 text-gold" />
+            </button>
           </motion.div>
+        ) : (
+          <motion.button
+            key="toggle"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            onClick={() => setOpen(true)}
+            className="flex h-12 w-12 items-center justify-center rounded-full bg-ink/90 backdrop-blur-xl border border-gold/40 shadow-[0_8px_32px_rgba(184,145,47,0.2)]"
+            aria-label="Open menu"
+          >
+            <Menu className="h-5 w-5 text-gold" />
+          </motion.button>
         )}
       </AnimatePresence>
-      <button
-        onClick={() => setOpen(!open)}
-        className="flex h-10 w-10 items-center justify-center rounded-full bg-gold/10 backdrop-blur-md border border-gold/40"
-        aria-label="Open menu"
-      >
-        <Menu className="h-5 w-5 text-gold" />
-      </button>
     </div>
   );
 };

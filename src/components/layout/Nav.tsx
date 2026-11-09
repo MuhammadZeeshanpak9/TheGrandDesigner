@@ -4,7 +4,6 @@
 // the app's LazyMotion wrapper is intentionally not used here.
 
 import { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Home, BookOpen, Sparkles, Mail } from "lucide-react";
 import { FloatingDock, type FloatingDockItem } from "@/components/ui/floating-dock";
@@ -13,7 +12,6 @@ import { WellnessDropdown } from "@/components/layout/WellnessDropdown";
 const WELLNESS_HREF = "/wellness";
 
 export function Nav() {
-  const router = useRouter();
   const [wellnessOpen, setWellnessOpen] = useState(false);
   const [anchor, setAnchor] = useState<{ left: number; bottom: number } | null>(null);
   const wellnessTriggerRef = useRef<HTMLAnchorElement | null>(null);
@@ -23,8 +21,15 @@ export function Nav() {
     const el = wellnessTriggerRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
+    const panelHalfWidth = 144; // half of WellnessDropdown's w-72 (288px)
+    const margin = 16;
+    const rawLeft = rect.left + rect.width / 2;
+    const clampedLeft = Math.min(
+      Math.max(rawLeft, panelHalfWidth + margin),
+      window.innerWidth - panelHalfWidth - margin,
+    );
     setAnchor({
-      left: rect.left + rect.width / 2,
+      left: clampedLeft,
       bottom: window.innerHeight - rect.top + 16,
     });
   }
@@ -55,17 +60,12 @@ export function Nav() {
       onContainerRef: (el) => {
         wellnessTriggerRef.current = el;
       },
+      closeMobileOnTrigger: false,
       ariaProps: { "aria-haspopup": "true", "aria-expanded": wellnessOpen },
       onTrigger: () => {
-        // Hover panels don't make sense on touch devices, so on mobile,
-        // tapping Wellness in the expanded mobile dock list navigates
-        // straight to /wellness instead of opening the desktop-style hover
-        // dropdown. This is an accepted, explicit UX simplification.
-        const isMobile = window.matchMedia("(max-width: 767px)").matches;
-        if (isMobile) {
-          router.push(WELLNESS_HREF);
-          return;
-        }
+        // Hover doesn't exist on touch devices, so on mobile tapping
+        // Wellness toggles the same dropdown panel open/closed (anchored to
+        // the mobile dock's Wellness icon) instead of relying on hover.
         clearCloseTimer();
         computeAnchor();
         setWellnessOpen((v) => !v);

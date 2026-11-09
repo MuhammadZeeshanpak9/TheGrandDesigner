@@ -111,7 +111,7 @@ export function WellnessDropdown({
             transform: "translateX(-50%)",
           }}
           className={cn(
-            "z-50 w-72 rounded-2xl border border-ink/10 bg-white/90 p-2 backdrop-blur-xl",
+            "z-50 w-72 max-w-[calc(100vw-2rem)] rounded-2xl border border-ink/10 bg-white/90 p-2 backdrop-blur-xl",
             "shadow-[inset_0_0_40px_rgba(184,145,47,0.08),0_8px_32px_rgba(0,0,0,0.4)]",
           )}
         >
