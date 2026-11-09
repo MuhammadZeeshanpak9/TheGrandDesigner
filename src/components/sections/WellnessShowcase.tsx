@@ -71,12 +71,12 @@ export function WellnessShowcase() {
               className={cn(
                 "rounded-2xl p-8 text-center transition-all duration-300 hover:-translate-y-2",
                 isCenter
-                  ? "border border-gold bg-gradient-to-b from-gold/25 to-gold/10 backdrop-blur-md shadow-[0_16px_40px_rgba(184,145,47,0.25)] md:scale-110 md:py-12 z-10 hover:shadow-[0_24px_56px_rgba(184,145,47,0.35)]"
+                  ? "border border-gold bg-gradient-to-b from-gold/25 to-gold/10 backdrop-blur-md shadow-[0_16px_40px_rgba(184,145,47,0.25)] scale-105 md:scale-110 py-10 md:py-12 z-10 hover:shadow-[0_24px_56px_rgba(184,145,47,0.35)]"
                   : cn(
                       "border border-mist bg-white/60 backdrop-blur-md hover:shadow-[0_16px_32px_rgba(22,21,26,0.12)]",
                       tier.position === "left"
-                        ? "md:-rotate-3 md:origin-bottom-right hover:md:rotate-0"
-                        : "md:rotate-3 md:origin-bottom-left hover:md:rotate-0",
+                        ? "-rotate-3 origin-bottom-right hover:rotate-0"
+                        : "rotate-3 origin-bottom-left hover:rotate-0",
                     ),
               )}
             >

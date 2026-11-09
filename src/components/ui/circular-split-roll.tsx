@@ -160,7 +160,7 @@ export default function CircularSplitRoll({
           type="button"
           onClick={() => go(-1)}
           aria-label="Previous understanding"
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-mist bg-white/90 text-ink transition-all duration-300 hover:border-gold hover:text-gold hover:scale-105 active:scale-95"
+          className="hidden sm:flex h-11 w-11 items-center justify-center rounded-full border border-mist bg-white/90 text-ink transition-all duration-300 hover:border-gold hover:text-gold hover:scale-105 active:scale-95"
         >
           <ChevronLeft className="h-5 w-5" />
         </button>
@@ -182,7 +182,7 @@ export default function CircularSplitRoll({
           type="button"
           onClick={() => go(1)}
           aria-label="Next understanding"
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-mist bg-white/90 text-ink transition-all duration-300 hover:border-gold hover:text-gold hover:scale-105 active:scale-95"
+          className="hidden sm:flex h-11 w-11 items-center justify-center rounded-full border border-mist bg-white/90 text-ink transition-all duration-300 hover:border-gold hover:text-gold hover:scale-105 active:scale-95"
         >
           <ChevronRight className="h-5 w-5" />
         </button>
