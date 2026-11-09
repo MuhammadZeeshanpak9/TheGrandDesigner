@@ -34,12 +34,13 @@ const DEFAULT_GRADIENTS = [
   "from-gold via-ink to-plum",
 ];
 
-function geometryFor(offset: number): CardGeometry {
+function geometryFor(offset: number, spacing: number): CardGeometry {
   const abs = Math.abs(offset);
   if (abs > 2) {
-    return { x: offset > 0 ? 420 : -420, scale: 0.6, opacity: 0, zIndex: 0, rotateY: offset > 0 ? 35 : -35 };
+    const far = spacing * 1.9;
+    return { x: offset > 0 ? far : -far, scale: 0.6, opacity: 0, zIndex: 0, rotateY: offset > 0 ? 35 : -35 };
   }
-  const x = offset * 220;
+  const x = offset * spacing;
   const scale = 1 - abs * 0.22;
   const opacity = abs === 0 ? 1 : abs === 1 ? 0.55 : 0.2;
   const zIndex = 10 - abs;
@@ -55,8 +56,18 @@ export default function CircularSplitRoll({
   className?: string;
 }) {
   const [active, setActive] = useState(0);
+  const [spacing, setSpacing] = useState(220);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const count = items.length;
+
+  useEffect(() => {
+    function updateSpacing() {
+      setSpacing(window.innerWidth < 640 ? 110 : 220);
+    }
+    updateSpacing();
+    window.addEventListener("resize", updateSpacing);
+    return () => window.removeEventListener("resize", updateSpacing);
+  }, []);
 
   const safeItems = useMemo(
     () =>
@@ -85,7 +96,7 @@ export default function CircularSplitRoll({
       if (offset > count / 2) offset -= count;
       if (offset < -count / 2) offset += count;
 
-      const geo = geometryFor(offset);
+      const geo = geometryFor(offset, spacing);
       gsap.to(node, {
         x: geo.x,
         scale: geo.scale,
@@ -97,20 +108,20 @@ export default function CircularSplitRoll({
         overwrite: "auto",
       });
     });
-  }, [active, count, safeItems]);
+  }, [active, count, safeItems, spacing]);
 
   const current = safeItems[active];
 
   return (
-    <div className={cn("relative w-full", className)}>
-      <div className="relative mx-auto h-[360px] sm:h-[400px] max-w-3xl [perspective:1200px]">
+    <div className={cn("relative w-full overflow-hidden", className)}>
+      <div className="relative mx-auto h-[300px] sm:h-[400px] max-w-3xl [perspective:1200px]">
         {safeItems.map((item, index) => (
           <div
             key={item.id}
             ref={(el) => {
               cardRefs.current[index] = el;
             }}
-            className="absolute left-1/2 top-1/2 h-[260px] w-[200px] sm:h-[300px] sm:w-[230px] -translate-x-1/2 -translate-y-1/2 will-change-transform"
+            className="absolute left-1/2 top-1/2 h-[210px] w-[160px] sm:h-[300px] sm:w-[230px] -translate-x-1/2 -translate-y-1/2 will-change-transform"
             style={{ transformStyle: "preserve-3d" }}
             aria-hidden={index !== active}
           >

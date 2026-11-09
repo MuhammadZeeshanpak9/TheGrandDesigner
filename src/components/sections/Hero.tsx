@@ -4,10 +4,10 @@ export function Hero() {
   return (
     <section className="relative min-h-screen w-full flex flex-col justify-between px-6 md:px-12 lg:px-16 pt-32 pb-14 sm:pb-16">
       {/* Middle text blocks */}
-      <div className="my-auto w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center pt-8">
+      <div className="my-auto w-full grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center pt-8">
         {/* Left-middle: 3 stacked lines, ink, bold, uppercase, tracking-wide */}
         <div className="flex flex-col select-none max-w-sm">
-          <p className="font-display font-extrabold uppercase tracking-[0.14em] text-ink text-base sm:text-lg md:text-xl lg:text-[22px] leading-relaxed drop-shadow-[0_1px_12px_rgba(255,255,255,0.9)]">
+          <p className="font-display font-extrabold uppercase tracking-[0.1em] sm:tracking-[0.14em] text-ink text-lg sm:text-lg md:text-xl lg:text-[22px] leading-snug sm:leading-relaxed [text-shadow:0_1px_3px_rgba(255,255,255,0.9),0_2px_18px_rgba(255,255,255,0.9)]">
             INFORMATION IS POWER
             <br />
             &ldquo;INFORMATION&rdquo; IS MENTAL
@@ -18,7 +18,7 @@ export function Hero() {
 
         {/* Right-middle: 2 stacked lines, ink, bold, uppercase, tracking-wide */}
         <div className="flex flex-col md:items-end select-none">
-          <p className="font-display font-extrabold uppercase tracking-[0.14em] text-ink text-base sm:text-lg md:text-xl lg:text-[22px] leading-relaxed md:text-right max-w-sm drop-shadow-[0_1px_12px_rgba(255,255,255,0.9)]">
+          <p className="font-display font-extrabold uppercase tracking-[0.1em] sm:tracking-[0.14em] text-ink text-lg sm:text-lg md:text-xl lg:text-[22px] leading-snug sm:leading-relaxed md:text-right max-w-sm [text-shadow:0_1px_3px_rgba(255,255,255,0.9),0_2px_18px_rgba(255,255,255,0.9)]">
             I AM A MENTAL BEING
             <br />
             MY UNIVERSE IS MENTAL
@@ -28,7 +28,7 @@ export function Hero() {
 
       {/* Bottom-left: Greatness In You heading + Book Now button */}
       <div className="flex flex-col items-start gap-6 sm:gap-7 select-none mt-auto pt-8">
-        <h1 className="font-display font-extrabold uppercase tracking-[0.04em] sm:tracking-[0.06em] text-ink text-4xl min-[480px]:text-5xl sm:text-6xl md:text-7xl lg:text-[80px] leading-[0.95] max-w-2xl drop-shadow-[0_2px_16px_rgba(255,255,255,0.95)]">
+        <h1 className="font-display font-extrabold uppercase tracking-[0.02em] sm:tracking-[0.06em] text-ink text-5xl min-[480px]:text-6xl sm:text-7xl md:text-7xl lg:text-[80px] leading-[0.95] max-w-2xl [text-shadow:0_2px_4px_rgba(255,255,255,0.95),0_4px_28px_rgba(255,255,255,1)]">
           GREATNESS IN YOU
         </h1>
 
