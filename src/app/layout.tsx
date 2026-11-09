@@ -39,7 +39,7 @@ export default function RootLayout({
       lang="en"
       className={`${cormorant.variable} ${inter.variable} text-ink h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col text-ink font-sans">
+      <body className="min-h-full flex flex-col text-ink font-sans" suppressHydrationWarning>
         <div className="fixed inset-0 z-0 h-[100dvh] w-screen">
           <HalftoneNebula
             preset="grandDesigner"

@@ -1,45 +1,32 @@
-"use client";
+// Ported structure from NTWGC's src/app/wellness/soul/page.tsx — Cal.com
+// embed and analytics tracker removed (no backend equivalent in TGD).
 
-// NOTE: raw motion.* used per project convention (see floating-dock.tsx) —
-// the app's LazyMotion wrapper is intentionally not used here.
+import { WellnessPageHero } from "@/components/sections/wellness/WellnessPageHero";
+import { OfferingBlock } from "@/components/sections/wellness/OfferingBlock";
+import { WELLNESS_SUBPAGES } from "@/data/wellness-content";
 
-import { motion } from "framer-motion";
-import { fadeInUp } from "@/components/sections/motion-variants";
-import { MembershipForm } from "@/components/sections/MembershipForm";
+const data = WELLNESS_SUBPAGES.find((w) => w.slug === "soul")!;
 
-const MEMBERSHIP_OPTIONS = [
-  { label: "1 Year — $5,000", value: "1yr" },
-  { label: "2 Year — $10,000", value: "2yr" },
-];
+export const metadata = {
+  title: "Thank You Soul",
+  description: "Deep spiritual wellness — reconnect with your highest self.",
+};
 
 export default function WellnessSoulPage() {
   return (
     <main className="flex min-h-screen w-full flex-col">
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
-        variants={fadeInUp}
-        className="section-fade-edges bg-paper-warm/40 backdrop-blur-md py-20 md:py-28 px-6"
-      >
-        <div className="text-center mb-10">
-          <h1 className="font-display font-bold uppercase tracking-[0.1em] text-ink text-3xl md:text-4xl">
-            Mental Alignment and Self Care
-          </h1>
-        </div>
+      <WellnessPageHero variant="dark" title={data.title} subtitle={data.subtitle} />
 
-        <MembershipForm options={MEMBERSHIP_OPTIONS} />
+      {data.offerings.map((offering) => (
+        <OfferingBlock key={offering.heading} {...offering} accentColor={data.tierColor} />
+      ))}
 
-        <div className="max-w-xl mx-auto mt-10 border-t border-mist pt-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-ink/60 mb-3 text-center">
-            Collaborators
-          </p>
-          <ul className="text-sm text-ink/70 leading-relaxed text-center space-y-1">
-            <li>Ayahuasca centers</li>
-            <li>Technology companies created to advance the human mind</li>
-          </ul>
-        </div>
-      </motion.section>
+      <div className="bg-ink pb-20 md:pb-28">
+        <span className="mx-auto block h-px w-14 bg-gold" />
+        <p className="mx-auto mt-8 max-w-xl px-6 text-center font-display text-[22px] font-light italic text-gold">
+          Thank you for choosing to Elevate YOU and the world inside YOU.
+        </p>
+      </div>
     </main>
   );
 }
