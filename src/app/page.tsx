@@ -5,6 +5,7 @@ import { WellnessShowcase } from "@/components/sections/WellnessShowcase";
 import { StoryBlock } from "@/components/sections/StoryBlock";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { ConnectForm } from "@/components/sections/ConnectForm";
+import { SocialConnect } from "@/components/sections/SocialConnect";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <StoryBlock />
       <Testimonials />
       <ConnectForm />
+      <SocialConnect />
     </main>
   );
 }
