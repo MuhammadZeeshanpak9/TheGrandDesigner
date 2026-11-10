@@ -3,43 +3,46 @@
 // NOTE: raw motion.* used per project convention (see floating-dock.tsx) —
 // the app's LazyMotion wrapper is intentionally not used here.
 
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-const WORDS = ["THE", "GRAND", "DESIGNER"];
-const CYCLE_SECONDS = WORDS.length * 0.5 + 2.2; // pop-in duration + hold before looping
-
 export function SiteLogo() {
+  // On pages with a Hero section (home), hide the fixed top logo once the
+  // user scrolls past it — it's a Hero-only flourish, not a site-wide mark.
+  // Pages with no [data-hero] element (Our Story, Wellness, etc.) keep it
+  // visible the whole time, since there's nothing to scroll past there.
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const hero = document.querySelector("[data-hero]");
+    if (!hero) return;
+    const io = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting));
+    io.observe(hero);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: -12 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: -12, x: "-50%" }}
+      animate={{ opacity: visible ? 1 : 0, y: 0, x: "-50%" }}
       transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
-      className="fixed top-14 right-6 z-50"
+      className={`fixed top-9 left-1/2 z-50 ${visible ? "" : "pointer-events-none"}`}
     >
       <Link
         href="/"
-        className="flex h-11 items-center gap-1.5"
+        className="flex h-40 items-center md:h-48"
         aria-label="The Grand Designer — Home"
       >
-        {/* TODO: replace text mark with client-provided logo image */}
-        {WORDS.map((word, i) => (
-          <motion.span
-            key={word}
-            className="font-display font-extrabold text-ink text-xs tracking-[0.2em] uppercase select-none [text-shadow:0_1px_10px_rgba(255,255,255,0.9)]"
-            initial={{ opacity: 0, y: -8, scale: 0.7 }}
-            animate={{ opacity: [0, 1, 1, 0], y: [-8, 0, 0, -8], scale: [0.7, 1, 1, 0.7] }}
-            transition={{
-              duration: CYCLE_SECONDS,
-              times: [0, 0.08, 0.9, 1],
-              ease: "easeOut",
-              repeat: Infinity,
-              delay: i * 0.5,
-            }}
-          >
-            {word}
-          </motion.span>
-        ))}
+        <Image
+          src="/images/tgd-logo-transparent.png"
+          alt="The Grand Designer"
+          width={1024}
+          height={1024}
+          priority
+          className="h-40 w-40 object-contain md:h-48 md:w-48"
+        />
       </Link>
     </motion.div>
   );
