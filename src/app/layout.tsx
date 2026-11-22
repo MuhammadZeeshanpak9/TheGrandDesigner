@@ -5,7 +5,6 @@ import { Nav } from "@/components/layout/Nav";
 import { SiteLogo } from "@/components/layout/SiteLogo";
 import { TickerHeader } from "@/components/layout/TickerHeader";
 import { NewsletterFooter } from "@/components/sections/NewsletterFooter";
-import HalftoneNebula from "@/components/ui/halftone-nebula";
 import "./globals.css";
 
 const cormorant = Cormorant({
@@ -39,16 +38,7 @@ export default function RootLayout({
       lang="en"
       className={`${cormorant.variable} ${inter.variable} text-ink h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col text-ink font-sans" suppressHydrationWarning>
-        <div className="fixed inset-0 z-0 h-[100dvh] w-screen">
-          <HalftoneNebula
-            preset="grandDesigner"
-            height="100%"
-            interactive
-            maxDpr={1.5}
-            voidClassName="bg-[var(--color-paper)]"
-          />
-        </div>
+      <body className="min-h-full flex flex-col text-ink font-sans bg-paper" suppressHydrationWarning>
         <MotionProvider>
           <TickerHeader />
           <SiteLogo />
