@@ -21,10 +21,10 @@ export function BookingTierList({
   return (
     <div
       className={cn(
-        "max-w-xl mx-auto border rounded-2xl shadow-sm p-6 backdrop-blur-md",
+        "mx-auto max-w-xl rounded-2xl p-6",
         premium
-          ? "bg-[#0d0b08]/90 border-gold/40"
-          : "bg-white/80 border-mist",
+          ? "wellness-glass-card-gold"
+          : "border border-mist bg-white/80 shadow-sm backdrop-blur-md",
       )}
     >
       <AnimatePresence mode="wait">
@@ -55,9 +55,10 @@ export function BookingTierList({
               <div
                 key={tier.label}
                 className={cn(
-                  "flex items-center justify-between gap-4 py-3",
+                  "flex flex-col items-start gap-3 rounded-xl px-3 py-3 transition-colors duration-300 sm:flex-row sm:items-center sm:justify-between sm:gap-4",
+                  premium && "hover:bg-gold/5",
                   i !== tiers.length - 1 &&
-                    (premium ? "border-b border-gold/20" : "border-b border-mist"),
+                    (premium ? "border-b border-gold/15" : "border-b border-mist"),
                 )}
               >
                 <span
@@ -68,11 +69,11 @@ export function BookingTierList({
                 >
                   {tier.label}
                 </span>
-                <div className="flex items-center gap-3 shrink-0">
+                <div className="flex w-full items-center justify-between gap-3 sm:w-auto sm:shrink-0">
                   <span
                     className={cn(
                       "text-sm font-semibold",
-                      premium ? "text-gold" : "text-ink",
+                      premium ? "wellness-text-gradient-gold" : "text-ink",
                     )}
                   >
                     {tier.price}
@@ -81,9 +82,9 @@ export function BookingTierList({
                     type="button"
                     onClick={() => setReserved(true)}
                     className={cn(
-                      "px-4 py-1.5 text-xs font-bold uppercase tracking-[0.15em] rounded-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]",
+                      "shrink-0 rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-[0.15em] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]",
                       premium
-                        ? "border border-gold text-gold hover:bg-gold hover:text-ink"
+                        ? "border border-gold/50 bg-gold/5 text-gold backdrop-blur-sm hover:border-gold hover:bg-gold hover:text-ink"
                         : "bg-ink text-paper hover:bg-teal",
                     )}
                   >

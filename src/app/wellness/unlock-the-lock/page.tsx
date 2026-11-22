@@ -15,7 +15,12 @@ export const metadata = {
 export default function WellnessUnlockTheLockPage() {
   return (
     <main className="flex min-h-screen w-full flex-col">
-      <WellnessPageHero variant="dark" title={data.title} subtitle={data.subtitle} />
+      <WellnessPageHero
+        variant="dark"
+        title={data.title}
+        subtitle={data.subtitle}
+        backgroundImage="/images/unlock-the-lock-jet.jpg"
+      />
 
       {data.offerings.map((offering) => (
         <OfferingBlock key={offering.heading} {...offering} accentColor={data.tierColor} />

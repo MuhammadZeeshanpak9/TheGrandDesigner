@@ -3,6 +3,7 @@
 // exists); token names translated: violet -> plum, violet-tint -> paper-warm.
 
 import type { ReactNode } from "react";
+import Image from "next/image";
 import { SectionParticles } from "@/components/sections/wellness/SectionParticles";
 
 type WellnessPageHeroProps = {
@@ -12,6 +13,15 @@ type WellnessPageHeroProps = {
   subtitle?: string;
   description?: string;
   titleClassName?: string;
+  /** Full-bleed photographic background (e.g. the private-jet visual on
+   * Unlock The Lock) instead of the flat `wellness-bg-gradient-hero` fill —
+   * layered with a cinematic dark gradient + radial vignette for legibility. */
+  backgroundImage?: string;
+  /** Same treatment as `backgroundImage` but a looping video, scoped to this
+   * section only (absolute, not fixed — it scrolls away with the section,
+   * it isn't pinned behind the whole page). Takes priority over
+   * `backgroundImage` if both are given. */
+  backgroundVideo?: string;
   children?: ReactNode;
 };
 
@@ -22,16 +32,59 @@ export function WellnessPageHero({
   subtitle,
   description,
   titleClassName,
+  backgroundImage,
+  backgroundVideo,
   children,
 }: WellnessPageHeroProps) {
   const dark = variant === "dark";
+  const hasBackgroundMedia = Boolean(backgroundImage || backgroundVideo);
 
   return (
     <section
       className={`relative overflow-hidden pt-40 pb-20 md:pt-48 md:pb-28 ${
-        dark ? "wellness-bg-gradient-hero" : "bg-paper-warm"
-      }`}
+        dark && !hasBackgroundMedia ? "wellness-bg-gradient-hero" : ""
+      } ${!dark ? "bg-paper-warm" : ""}`}
     >
+      {hasBackgroundMedia && (
+        <>
+          {backgroundVideo ? (
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 h-full w-full object-cover"
+              src={backgroundVideo}
+              aria-hidden
+            />
+          ) : (
+            <Image
+              src={backgroundImage!}
+              alt=""
+              fill
+              priority
+              className="object-cover"
+              aria-hidden
+            />
+          )}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to top, #060608 0%, rgba(10,4,16,0.55) 45%, rgba(10,4,16,0.85) 100%)",
+            }}
+            aria-hidden
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse at center, transparent 30%, rgba(6,6,8,0.65) 100%)",
+            }}
+            aria-hidden
+          />
+        </>
+      )}
       {dark && <SectionParticles count={30} />}
 
       <div className="relative mx-auto max-w-4xl px-6 text-center">

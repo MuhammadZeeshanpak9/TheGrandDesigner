@@ -13,6 +13,7 @@ import { ImageWithFallback } from "@/components/ui/MediaWithFallback";
 import { usePrefersReducedMotion } from "@/lib/hooks";
 import { GoWithinArt } from "@/components/sections/wellness/GoWithinArt";
 import { MindCardArt } from "@/components/sections/wellness/MindCardArt";
+import { UnlockTheLockArt } from "@/components/sections/wellness/UnlockTheLockArt";
 import { SectionParticles } from "@/components/sections/wellness/SectionParticles";
 import { WellnessFormField } from "@/components/sections/wellness/WellnessFormField";
 import { BookingTierList } from "@/components/sections/BookingTierList";
@@ -38,13 +39,16 @@ export type WellnessOffering = {
   secondaryImageAspect?: string;
   hasSecondaryImage?: boolean;
   hasPrimaryImage?: boolean;
-  heroArt?: "go-within" | "mind-card";
+  heroArt?: "go-within" | "mind-card" | "unlock-the-lock";
   imagePlain?: boolean;
   tagline?: string;
   bodyParagraphs?: string[];
   session?: OfferingSession;
   bookingTiers?: OfferingBookingTier[];
   bookingLabel?: string;
+  /** Looping video behind the booking-tiers card only, scoped to that card's
+   * rounded bounds (not the hero or the whole section). */
+  bookingBackgroundVideo?: string;
   pricingLabel?: string;
   price1yr?: string;
   price2yr?: string;
@@ -69,7 +73,7 @@ function ImageBubble({
   alt: string;
   reduced: boolean;
   delay?: number;
-  heroArt?: "go-within" | "mind-card";
+  heroArt?: "go-within" | "mind-card" | "unlock-the-lock";
   plain?: boolean;
   aspect?: string;
 }) {
@@ -95,6 +99,8 @@ function ImageBubble({
           <GoWithinArt />
         ) : heroArt === "mind-card" ? (
           <MindCardArt />
+        ) : heroArt === "unlock-the-lock" ? (
+          <UnlockTheLockArt />
         ) : (
           <ImageWithFallback src={src} alt={alt} watermark={alt} rounded="" />
         )}
@@ -124,6 +130,7 @@ export function OfferingBlock({
   session,
   bookingTiers,
   bookingLabel,
+  bookingBackgroundVideo,
   pricingLabel,
   price1yr,
   price2yr,
@@ -259,7 +266,22 @@ export function OfferingBlock({
       )}
     </div>
   ) : bookingTiers && bookingTiers.length > 0 ? (
-    <div className="wellness-glass-card-gold relative overflow-hidden rounded-[28px] p-10 text-left">
+    <div className="wellness-glass-card-gold relative mx-auto max-w-5xl overflow-hidden rounded-[28px] p-6 text-left sm:p-10 md:p-16">
+      {bookingBackgroundVideo && (
+        <>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 -z-10 h-full w-full object-cover opacity-70"
+            src={bookingBackgroundVideo}
+            aria-hidden
+          />
+          <div className="absolute inset-0 -z-10 bg-ink/40" aria-hidden />
+        </>
+      )}
+
       <span className="absolute left-5 top-5 h-4 w-4 border-l border-t border-gold/50" aria-hidden />
       <span className="absolute right-5 top-5 h-4 w-4 border-r border-t border-gold/50" aria-hidden />
       <span className="absolute bottom-5 left-5 h-4 w-4 border-b border-l border-gold/50" aria-hidden />
@@ -422,7 +444,9 @@ export function OfferingBlock({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
-            className="mx-auto mt-20 max-w-md text-center md:mt-24"
+            className={`mx-auto mt-20 text-center md:mt-24 ${
+              bookingTiers && bookingTiers.length > 0 ? "max-w-5xl" : "max-w-md"
+            }`}
           >
             <span className="mx-auto flex w-24 items-center justify-center gap-2" aria-hidden>
               <span className="h-px flex-1 bg-gradient-to-r from-transparent to-gold" />

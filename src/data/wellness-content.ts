@@ -150,16 +150,18 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     slug: "unlock-the-lock",
     title: "UNLOCK THE LOCK",
     subtitle: "",
-    tierColor: "#9B7FC7",
+    tierColor: "#C9A646",
     offerings: [
       {
         heading: "Unlock The Lock.",
         hasPrimaryImage: true,
-        heroArt: "go-within",
+        heroArt: "unlock-the-lock",
         bodyParagraphs: [
           "This session is a custom mental and emotional analysis integrated with spiritual understanding of SELF that has been proven to be 100% accurate and precise as the UNIVERSAL SECRET.",
         ],
         bookingLabel: "Body. Mind. Soul.",
+        bookingBackgroundVideo:
+          "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260514_135830_bb6491d1-9b66-4aec-9722-13b4dfe3fb46.mp4",
         bookingTiers: [
           { label: "1 hr consultation online", price: "$1,000,000" },
           { label: "30 min one-on-one consultation", price: "$2,000,000" },

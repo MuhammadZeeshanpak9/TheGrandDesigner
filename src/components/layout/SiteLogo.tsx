@@ -9,18 +9,26 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 export function SiteLogo() {
-  // On pages with a Hero section (home), hide the fixed top logo once the
-  // user scrolls past it — it's a Hero-only flourish, not a site-wide mark.
-  // Pages with no [data-hero] element (Our Story, Wellness, etc.) keep it
-  // visible the whole time, since there's nothing to scroll past there.
+  // Hide the fixed top logo once the user scrolls down any page — it's a
+  // top-of-page flourish, not a persistent site-wide mark. Pages with a
+  // [data-hero] section hide it exactly when Hero scrolls out of view;
+  // pages without one (Our Story, Wellness, etc.) hide it after a small
+  // scroll threshold instead, since there's no Hero boundary to key off.
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const hero = document.querySelector("[data-hero]");
-    if (!hero) return;
-    const io = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting));
-    io.observe(hero);
-    return () => io.disconnect();
+
+    if (hero) {
+      const io = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting));
+      io.observe(hero);
+      return () => io.disconnect();
+    }
+
+    const onScroll = () => setVisible(window.scrollY < 80);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (

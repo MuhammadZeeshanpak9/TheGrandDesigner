@@ -51,7 +51,11 @@ export function Hero() {
         aria-hidden
       />
 
-      {/* Middle text blocks — gold, slide in from their respective sides */}
+      {/* Middle text blocks — gold, slide in from their respective sides.
+          On mobile the text uses a deeper, darker gold shade instead of the
+          bright accent gold, since the video has light frames (pale walls,
+          light floors) that wash out bright gold — no backdrop box, just a
+          richer text color. Desktop keeps the normal bright gold. */}
       <div className="relative z-10 my-auto w-full grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 items-center pt-8">
         <motion.div
           initial="hidden"
@@ -60,7 +64,7 @@ export function Hero() {
           variants={v(slideFromLeft)}
           className="flex flex-col items-center text-center md:items-start md:text-left select-none max-w-sm mx-auto md:mx-0"
         >
-          <p className="font-display font-extrabold uppercase tracking-[0.06em] text-gold text-base sm:text-lg md:text-xl lg:text-[22px] leading-snug sm:leading-relaxed">
+          <p className="font-display font-extrabold uppercase tracking-[0.06em] text-[#7a5a14] sm:text-gold text-base sm:text-lg md:text-xl lg:text-[22px] leading-snug sm:leading-relaxed">
             INFORMATION IS POWER
             <br />
             &ldquo;INFORMATION&rdquo; IS MENTAL
@@ -76,7 +80,7 @@ export function Hero() {
           variants={v(slideFromRight)}
           className="flex flex-col items-center text-center md:items-end md:text-right select-none mx-auto md:mx-0 mt-10 sm:mt-6 md:mt-0"
         >
-          <p className="font-display font-extrabold uppercase tracking-[0.06em] text-gold text-base sm:text-lg md:text-xl lg:text-[22px] leading-snug sm:leading-relaxed">
+          <p className="font-display font-extrabold uppercase tracking-[0.06em] text-[#7a5a14] sm:text-gold text-base sm:text-lg md:text-xl lg:text-[22px] leading-snug sm:leading-relaxed">
             I AM A MENTAL BEING
             <br />
             MY UNIVERSE IS MENTAL
@@ -93,7 +97,7 @@ export function Hero() {
         variants={v(slideFromBottom)}
         className="relative z-10 flex flex-col items-center text-center md:items-start md:text-left gap-6 sm:gap-7 select-none mt-auto pt-8"
       >
-        <h1 className="font-display font-extrabold uppercase tracking-[0.02em] sm:tracking-[0.06em] text-paper text-5xl min-[480px]:text-6xl sm:text-7xl md:text-7xl lg:text-[80px] leading-[0.95] max-w-2xl">
+        <h1 className="font-display font-extrabold uppercase tracking-[0.02em] sm:tracking-[0.06em] text-ink sm:text-paper text-5xl min-[480px]:text-6xl sm:text-7xl md:text-7xl lg:text-[80px] leading-[0.95] max-w-2xl">
           GREATNESS IN YOU
         </h1>
 
