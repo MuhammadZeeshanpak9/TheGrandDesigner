@@ -1,9 +1,14 @@
+"use client";
+
 // Adapted from NTWGC's src/components/layout/PageHero.tsx — pure
 // presentation. Dropped the `youtube` prop (no TGD wellness video asset
 // exists); token names translated: violet -> plum, violet-tint -> paper-warm.
+// NOTE: raw motion.* used per project convention (see floating-dock.tsx) —
+// the app's LazyMotion wrapper is intentionally not used here.
 
 import type { ReactNode } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { SectionParticles } from "@/components/sections/wellness/SectionParticles";
 
 type WellnessPageHeroProps = {
@@ -41,9 +46,13 @@ export function WellnessPageHero({
 
   return (
     <section
-      className={`relative overflow-hidden pt-40 pb-20 md:pt-48 md:pb-28 ${
-        dark && !hasBackgroundMedia ? "wellness-bg-gradient-hero" : ""
-      } ${!dark ? "bg-paper-warm" : ""}`}
+      className={`relative overflow-hidden ${
+        backgroundVideo
+          ? "flex min-h-[80vh] flex-col justify-end pb-16 pt-40 md:pb-20"
+          : "pt-40 pb-20 md:pt-48 md:pb-28"
+      } ${dark && !hasBackgroundMedia ? "wellness-bg-gradient-hero" : ""} ${
+        !dark ? "bg-paper-warm" : ""
+      }`}
     >
       {hasBackgroundMedia && (
         <>
@@ -98,13 +107,16 @@ export function WellnessPageHero({
           </p>
         )}
 
-        <h1
+        <motion.h1
+          initial={backgroundVideo ? { opacity: 0, y: -40 } : undefined}
+          animate={backgroundVideo ? { opacity: 1, y: 0 } : undefined}
+          transition={{ duration: 0.9, ease: "easeOut", delay: 0.2 }}
           className={`mt-3 font-display font-bold leading-[0.95] ${
             titleClassName ?? "text-[52px] md:text-[80px]"
           } ${dark ? "text-paper" : "text-ink"}`}
         >
           {title}
-        </h1>
+        </motion.h1>
 
         {subtitle && (
           <p

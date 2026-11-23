@@ -8,6 +8,7 @@
 // submit-success logic inside it instead of a live API call).
 
 import { useState, type ReactNode } from "react";
+import Image from "next/image";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { ImageWithFallback } from "@/components/ui/MediaWithFallback";
 import { usePrefersReducedMotion } from "@/lib/hooks";
@@ -58,6 +59,11 @@ export type WellnessOffering = {
   collaboratorPitch?: string;
   collaboratorItems?: string[];
   accentColor?: string;
+  /** Full-bleed photographic backdrop behind the whole section (e.g. the
+   * luxury interior visual on Unlock The Lock), layered under the existing
+   * bg-ink fill at reduced opacity so the section still reads as a single
+   * dark surface rather than a literal photo cutout. */
+  backgroundImage?: string;
 };
 
 function ImageBubble({
@@ -140,6 +146,7 @@ export function OfferingBlock({
   collaboratorPitch,
   collaboratorItems,
   accentColor,
+  backgroundImage,
 }: WellnessOffering) {
   const reduced = usePrefersReducedMotion();
   const [values, setValues] = useState({
@@ -339,6 +346,22 @@ export function OfferingBlock({
 
   return (
     <section className="relative overflow-hidden bg-ink py-24 md:py-36" style={accentStyle}>
+      {backgroundImage && (
+        <>
+          <Image
+            src={backgroundImage}
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-right"
+            aria-hidden
+          />
+          <div
+            className="absolute inset-0 bg-gradient-to-r from-ink via-ink/40 to-transparent"
+            aria-hidden
+          />
+        </>
+      )}
       <motion.div
         className="pointer-events-none absolute -top-20 left-1/4 h-[520px] w-[520px] rounded-full bg-gold/10 blur-[150px]"
         animate={reduced ? undefined : { x: [0, 60, -20, 0], y: [0, 40, 80, 0] }}

@@ -19,11 +19,16 @@ export default function WellnessUnlockTheLockPage() {
         variant="dark"
         title={data.title}
         subtitle={data.subtitle}
-        backgroundImage="/images/unlock-the-lock-jet.jpg"
+        backgroundVideo="/videos/unlock-the-lock-hero.mp4"
       />
 
       {data.offerings.map((offering) => (
-        <OfferingBlock key={offering.heading} {...offering} accentColor={data.tierColor} />
+        <OfferingBlock
+          key={offering.heading}
+          {...offering}
+          accentColor={data.tierColor}
+          backgroundImage="/images/Futuristic Golden Sunset Interior.png"
+        />
       ))}
 
       <div className="bg-ink pb-20 md:pb-28">
