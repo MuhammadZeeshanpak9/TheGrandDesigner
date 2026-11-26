@@ -80,7 +80,7 @@ export function WellnessPageHero({
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to top, #060608 0%, rgba(10,4,16,0.55) 45%, rgba(10,4,16,0.85) 100%)",
+                "linear-gradient(to top, #16151a 0%, #16151a 18%, rgba(22,21,26,0.6) 55%, rgba(22,21,26,0.15) 100%)",
             }}
             aria-hidden
           />
@@ -92,6 +92,25 @@ export function WellnessPageHero({
             }}
             aria-hidden
           />
+          {/* Softens the hard cut into the next section: a blurred fade plus
+              a curved (not straight) edge shape. */}
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-32 backdrop-blur-xl md:h-40"
+            style={{
+              background: "linear-gradient(to top, #16151a 0%, transparent 100%)",
+              maskImage: "linear-gradient(to top, black 0%, transparent 100%)",
+              WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 100%)",
+            }}
+            aria-hidden
+          />
+          <svg
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-20 w-full md:h-28"
+            viewBox="0 0 1440 120"
+            preserveAspectRatio="none"
+            aria-hidden
+          >
+            <path d="M0,40 C360,120 1080,0 1440,60 L1440,120 L0,120 Z" fill="#16151a" />
+          </svg>
         </>
       )}
       {dark && <SectionParticles count={30} />}

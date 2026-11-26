@@ -27,7 +27,8 @@ export default function WellnessUnlockTheLockPage() {
           key={offering.heading}
           {...offering}
           accentColor={data.tierColor}
-          backgroundImage="/images/Futuristic Golden Sunset Interior.png"
+          backgroundImage="/images/ELEV8 Experience Resort at Sunset.png"
+          backgroundImageMobile="/images/Golden Hour ELEV8 Resort Lounge mobile view.png"
         />
       ))}
 

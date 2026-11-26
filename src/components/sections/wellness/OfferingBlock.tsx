@@ -64,6 +64,10 @@ export type WellnessOffering = {
    * bg-ink fill at reduced opacity so the section still reads as a single
    * dark surface rather than a literal photo cutout. */
   backgroundImage?: string;
+  /** Portrait-cropped variant of `backgroundImage` shown below the `md`
+   * breakpoint instead (CSS-switched, no hydration mismatch). Falls back to
+   * `backgroundImage` on mobile if not given. */
+  backgroundImageMobile?: string;
 };
 
 function ImageBubble({
@@ -147,6 +151,7 @@ export function OfferingBlock({
   collaboratorItems,
   accentColor,
   backgroundImage,
+  backgroundImageMobile,
 }: WellnessOffering) {
   const reduced = usePrefersReducedMotion();
   const [values, setValues] = useState({
@@ -348,18 +353,36 @@ export function OfferingBlock({
     <section className="relative overflow-hidden bg-ink py-24 md:py-36" style={accentStyle}>
       {backgroundImage && (
         <>
-          <Image
-            src={backgroundImage}
-            alt=""
-            fill
-            sizes="100vw"
-            className="object-cover object-right"
-            aria-hidden
-          />
-          <div
-            className="absolute inset-0 bg-gradient-to-r from-ink via-ink/40 to-transparent"
-            aria-hidden
-          />
+          <div className="absolute inset-x-0 top-0 h-[560px] w-full sm:h-[480px] md:aspect-[1855/848] md:h-auto">
+            <Image
+              src={backgroundImageMobile ?? backgroundImage}
+              alt=""
+              fill
+              sizes="100vw"
+              className="object-cover object-right md:hidden"
+              aria-hidden
+            />
+            <Image
+              src={backgroundImage}
+              alt=""
+              fill
+              sizes="100vw"
+              className="hidden object-cover object-right md:block"
+              aria-hidden
+            />
+            <div
+              className="absolute inset-0 bg-gradient-to-r from-ink via-ink/40 to-transparent"
+              aria-hidden
+            />
+            <div
+              className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink to-transparent md:h-32"
+              aria-hidden
+            />
+            <div
+              className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-b from-transparent to-ink md:h-1/2"
+              aria-hidden
+            />
+          </div>
         </>
       )}
       <motion.div
@@ -387,7 +410,9 @@ export function OfferingBlock({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="grid gap-10 md:grid-cols-2 md:items-center md:gap-16"
+          className={`grid gap-10 md:grid-cols-2 md:items-center md:gap-16 ${
+            backgroundImage ? "pt-28 md:pt-36" : ""
+          }`}
         >
           <div className="flex flex-col gap-6 text-left">
             <span className="flex items-center gap-3">
